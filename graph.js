@@ -29,7 +29,7 @@ let E = [
 // find the city (name) and collect all the edges
 /*
   {
-    name: 0, // <--- this will be the key
+    name: 0, // <--- NOTE: this will be the key
     edges: [
       {
         target: 1,
@@ -47,7 +47,7 @@ let E = [
   },
   */
 
-function make_graph() {
+const make_graph = () => {
   // to hold all final nodes
   let graph = {};
 
@@ -63,12 +63,49 @@ function make_graph() {
   for (let e of E) {
     // one directional
     graph[e.s].edges.push({ target: e.t, length: e.len})
-    // two directional
+    // two directional - nicer implementation!
     graph[e.t].edges.push({ target: e.s, length: e.len})
   }
   return graph;
 }
 
-console.log(make_graph(V));
+example = make_graph(V);
+
+console.log(JSON.stringify(example));
+
+/******************************************************************************
+{
+"0": { "edges": [
+                  {"target":1,"length":7},
+                  {"target":2,"length":9},
+                  {"target":5,"length":14}]
+      },
+"1": { "edges": [
+                  {"target":0,"length":7},
+                  {"target":2,"length":10},
+                  {"target":3,"length":15}]
+      },
+"2": { "edges": [
+                  {"target":0,"length":9},
+                  {"target":1,"length":10},
+                  {"target":5,"length":2},
+                  {"target":3,"length":11}]
+      },
+"3": { "edges": [
+                  {"target":1,"length":15},
+                  {"target":2,"length":11},
+                  {"target":4,"length":6}]
+      },
+"4": { "edges": [
+                  {"target":3,"length":6},
+                  {"target":5,"length":9}]
+      },
+"5": { "edges": [
+                  {"target":0,"length":14},
+                  {"target":2,"length":2},
+                  {"target":4,"length":9}]
+      }
+}
+ ******************************************************************************/
 
 // TODO Dijkstra stuff
