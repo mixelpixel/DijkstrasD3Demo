@@ -129,9 +129,13 @@ Assignment
 
 2. Implement Dijkstra's algorithm over that graph.
 
-3. Integrate the solver with the D3 demo.
+3. Integrate the solver with the D3 demo; make it quick and dirty to just get it going.
 
-4. ...
+4. Add text fields for starting and ending cities.
 
-5. Profit!
+5. Refactor from quick and dirty integration into an nice React app.
+
+6. ...
+
+7. Profit!
 
