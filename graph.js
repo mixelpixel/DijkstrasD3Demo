@@ -2,7 +2,7 @@
  * https://github.com/thomcom/DijkstrasD3Demo
  * Weds PM lecture:
  * coding a graph w/Beej
- * take a bunch of nodes (vertexes) and a bunch of edges then build a graph
+ * take a bunch of nodes (vertexes) and a bunch of edges, then build a graph
  ******************************************************************************/
 
 // Vertexes: numbers for "city names"
@@ -53,7 +53,7 @@ const make_graph = () => {
 
   // add all verts to graph
   for (let v of V) {
-    console.log(v);
+    // console.log(v);
     graph [v] = {
       edges: []
     };
