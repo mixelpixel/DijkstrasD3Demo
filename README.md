@@ -93,6 +93,15 @@ Variants
 
 * One of the key speedups in the algorithm is how you go about finding the the nearest city. You could use linear search O(n), but you can get O(log n) with a [priority queue](https://en.wikipedia.org/wiki/Priority_queue).
 
+
+Alternate Implementation
+---
+
+IIRC, the above is from Cormen's Algorithms. [Wikipedia has a different, equivalent algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode).
+
+The included code in `example/` uses the Wikipedia algorithm.
+
+
 Dijkstra's D3 Demo
 ---
 
@@ -112,3 +121,21 @@ Swap the commented lines in the file to perform Dijkstra's Algorithm on the tree
     let tree = build_tree(graph_spec.V, graph_spec.E);
     //let tree = build_tree(V,E);
     //console.log(JSON.stringify(tree,null,2));
+
+
+Assignment
+---
+1. Get a graph built from a list of verts and edges.
+
+2. Implement Dijkstra's algorithm over that graph.
+
+3. Integrate the solver with the D3 demo; make it quick and dirty to just get it going.
+
+4. Add text fields for starting and ending cities.
+
+5. Refactor from quick and dirty integration into an nice React app.
+
+6. ...
+
+7. Profit!
+
