@@ -1,6 +1,6 @@
 /******************************************************************************
  * https://github.com/thomcom/DijkstrasD3Demo
- * Weds PM lecture:
+ * Weds PM lecture: https://youtu.be/Jf9g98A2CIY
  * coding a graph w/Beej
  * take a bunch of nodes (vertexes) and a bunch of edges, then build a graph
  ******************************************************************************/
