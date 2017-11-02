@@ -1,15 +1,24 @@
-/** WORK IN PROGRESS! */
-
 /**
- * Build a graph for use with Dijkstra
+ * Dijkstra's shortest part algorithm
+ * 
+ * https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+ * 
+ * Consider Dijkstra's original description of the nature of the problem:
+ * 
+ * "Find the path of minimum total length between two given nodes P￼ and
+ * Q￼.
+ * 
+ * "We use the fact that, if R￼ is a node on the minimal path from P￼ to
+ * Q￼, knowledge of the latter implies the knowledge of the minimal path
+ * from P￼ to R￼."
  */
 
 // Take a bunch of nodes (vertexes) and a bunch of edges, and build a graph
 
-// VerTEXAS
+// Vertices, or "Cities"
 let V = [0, 1, 2, 3, 4, 5];
 
-// Edges
+// Edges, or "Roads"
 
 // s = starting node (from)
 // t = target node (to)
@@ -33,15 +42,15 @@ function make_graph() {
 
   // Add all verts to graph
   for (let v of V) {
-    graph[v] = {
-      edges: []
-    };
+  graph[v] = {
+    edges: []
+  };
   }
 
   // Add all edges
   for (let e of E) {
-    graph[e.s].edges.push({ target:e.t, length: e.len});
-    graph[e.t].edges.push({ target:e.s, length: e.len});
+  graph[e.s].edges.push({ target:e.t, length: e.len});
+  graph[e.t].edges.push({ target:e.s, length: e.len});
   }
 
   return graph;
@@ -50,92 +59,131 @@ function make_graph() {
 /**
  * Shortest path 
  */
-function Dijkstra(graph, source) {
+function Dijkstra(graph, source, destination) {
 
-	function findMin(Q) {
-		let smallest = Number.MAX_VALUE, smallestIndex;
+  /**
+   * Search the set of unvisited cities, Q, to find the one with the
+   * minimum distance
+   */
+  function findMinDist() {
+    let smallestV;
+    let smallestDist = Number.MAX_VALUE;
 
-		for (let i = 0; i < Q.length; i++) {
-			if (Q[i].dist <= smallest) {
-				smallestIndex = i;
-				smallest = Q[i].dist;
-			}
-		}
+    for (let v in Q) {
+      v = +v; // Convert to int
+      if (dist[v] <= smallestDist) {
+        smallestDist = dist[v];
+        smallestV = v;
+      }
+    }
 
-		return smallestIndex;
-	}
+    return smallestV;
+  }
 
-	let Q = [];
+  let Q = {}; // Set of cities we still have to visit
 
-	for (let v in Object.keys(graph)) {
-		let vertInfo = {
-			vert: v,
-			dist: v==source? 0: Number.MAX_VALUE,
-			prev: null
-		};
+  let dist = {}; // Best known distance from a city to source
+  let prev = {}; // Best known direction from a city to source
 
-		Q.push(vertInfo);
-	}
-	//console.log(JSON.stringify(Q, null, 2));
+  let foundDest = false;
 
-	while (Q.length > 0) {
-		let index = findMin(Q);
+  // Initialize all dist to infinity, and all prev pointers to null
+  let verts = Object.keys(graph).map(n => +n); // n => +n to convert to int
 
-		// Remove from Q
-		let vertInfo = Q.splice(index, 1)[0];
+  for (let v in verts) {
+    dist[v] = Number.MAX_VALUE;
+    prev[v] = null;
 
-		let vertNum = vertInfo.vert;
-		let neighbors = graph[vertNum].edges;
+    Q[v] = true;
+  }
 
-		for (let n of neighbors) {
-			let alt = vertInfo.dist + n.len;
-			if (alt < )
+  // Distance from source to itself is 0; this is our starting point
+  dist[source] = 0;
 
-		}
+  // While we have unvisited cities in the set, keep relaxing the
+  // distances until we find our destination:
 
+  while (Object.keys(Q).length > 0) {
+    let currentNode = findMinDist();
 
-17          for each neighbor v of u:           // where v is still in Q.
-18              alt ← dist[u] + length(u, v)
-19              if alt < dist[v]:               // A shorter path to v has been found
-20                  dist[v] ← alt 
-21                  prev[v] ← u 
-	}
+    // Check if we found our destination
+    if (currentNode == destination) {
+      // If so, we're done
+      foundDest = true;
+      break;
+     
+    }
+
+    // Remove current from set
+    delete Q[currentNode];
+
+    // Let's see if any of our neighbors need to relax
+
+    let neighborsEdges = graph[currentNode].edges;
+
+    for (let neighborEdge of neighborsEdges) {
+      let neighbor = neighborEdge.target;
+      let distanceToNeighbor = neighborEdge.length;
+
+      let altDistance = dist[currentNode] + distanceToNeighbor;
+
+      // See if the newly computed alternative distance is less
+      // than the existing, stored distance at the neighbor:
+
+      if (altDistance < dist[neighbor]) {
+        // Relax the neighbor node
+        dist[neighbor] = altDistance;
+
+        // And now the shortest path is to go back this way
+        prev[neighbor] = currentNode;
+      }
+    }
+  }
+
+  // If we got here, we're in one of three states:
+  //   1. Found the city (foundDest === true)
+  //   2. Couldn't find the city (foundDest === false && Q is empty)
+  //   3. Couldn't reach the city (foundDest === false && Q not empty)
+  //
+  // In case 3, maybe the city doesn't exist, or maybe it's on a
+  // disjoint part of the graph (an island, say).
+  //
+  // We'll just make cases 2 and 3 the same ("not found")
+
+  if (foundDest) {
+    // We should package up the path into something nice for the caller,
+    // so we'll follow the prev pointers from the dest to the source to
+    // make an easy-to-use array:
+
+    let path = [];
+
+    let curNode = destination;
+    do {
+      path.unshift(curNode);
+      curNode = prev[curNode];
+    } while (curNode != source);
+
+    path.unshift(source); // Put the source on the front to be complete
+
+    // And give the caller back the path and total distance
+    return {
+      path: path,
+      distance: dist[destination]
+    }
+  }
+
+  // Not found, or not reachable
+  return null;
 }
 
-Dijkstra(make_graph(), 0);
+let graph = make_graph();
+//console.log(JSON.stringify(graph, null, 2));
 
-/*
+// Compute a shortest path
+const source = 0;
+const destination = 3;
 
-1  function Dijkstra(Graph, source):
-2
-3      create vertex set Q
-4
-5      for each vertex v in Graph:             // Initialization
-6          dist[v] ← INFINITY                  // Unknown distance from source to v
-7          prev[v] ← UNDEFINED                 // Previous node in optimal path from source
-8          add v to Q                          // All nodes initially in Q (unvisited nodes)
-9
-10      dist[source] ← 0                        // Distance from source to source
-11      
-12      while Q is not empty:
-13          u ← vertex in Q with min dist[u]    // Node with the least distance
-14                                                      // will be selected first
-15          remove u from Q 
-16          
-17          for each neighbor v of u:           // where v is still in Q.
-18              alt ← dist[u] + length(u, v)
-19              if alt < dist[v]:               // A shorter path to v has been found
-20                  dist[v] ← alt 
-21                  prev[v] ← u 
-22
-23      return dist[], prev[]
+const path = Dijkstra(graph, source, destination);
 
-If we are only interested in a shortest path between vertices source and target, we can terminate the search after line 15 if u = target. Now we can read the shortest path from source to target by reverse iteration:
-
-1  S ← empty sequence
-2  u ← target
-3  while prev[u] is defined:                  // Construct the shortest path with a stack S
-4      insert u at the beginning of S         // Push the vertex onto the stack
-5      u ← prev[u]                            // Traverse from target to source
-6  insert u at the beginning of S             // Push the source onto the stack
-*/
+console.log(`Shortest path from ${source} to ${destination}: ${JSON.stringify(path.path)}`);
+console.log(`Distance: ${path.distance}`)
