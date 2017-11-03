@@ -1,38 +1,20 @@
+/******************************************************************************
+ * Establish LA and NY cities as start and end points
+ * randomly select additional cities to use for calculating
+ * the shortest path using Dijkstra's algorithm
+ ******************************************************************************/
 'use-strict';
 /* eslint no-console: 0 */
 
-const city_list = require('./cities.js');
+// const cities = require('./cities.js');
+const cities = require('./convertCityCoordinates.js');
+const cityList = cities.cities;
 const distanceBetween = require('./distance.js');
+const dist = distanceBetween.distanceBetween;
 
-// console.log(city_list);
-// console.log(city_list.Cities);
-console.log(city_list.Cities.length);
-console.log(city_list.Cities[0]);
-console.log(city_list.Cities[0].name);
-// console.log(city_list.Cities.indexOf({x: '33613.1588', y: '86118.3061', name: 'Lincoln | Talladega | AL' }));
+console.log('1) List length:', cityList.length);
 
-// for (let i = 0; i < city_list.Cities.length; i++) {
-//   if (city_list.Cities[i].name === 'South Los Angeles | Los Angeles | CA') {
-//     console.log('LA', i);
-//   }
-//   if (city_list.Cities[i].name === 'Washington Heights | New York | NY') {
-//     console.log('NY', i);
-//   }
-// }
+const LA = cityList[12268];
+const NY = cityList[71590];
 
-console.log(city_list.Cities[0]);
-console.log(city_list.Cities[12268]); // ~~~> LA
-console.log(city_list.Cities[71590]); // ~~~> NY
-console.log(city_list.Cities[city_list.Cities.length - 1]);
-
-console.log(distanceBetween.distanceBetween(city_list.Cities[12268], city_list.Cities[71590]));
-
-
-/*
-Cities = [
-  {"x":"33613.1588","y":"86118.3061","name":"Lincoln | Talladega | AL"}, ...
-  */
-
-
-   36014.8920  115267.9560 | Exploration Peak Park | Clark | NV
-   42823.9560   76053.5345 | Apulia | Onondaga | NY
+console.log(dist(LA, NY));

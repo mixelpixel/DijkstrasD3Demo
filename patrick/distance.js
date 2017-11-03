@@ -1,7 +1,5 @@
 /******************************************************************************
- * Travelling Salesman: Exhaustive Search
  * Calculate the distance between two coordinates
- *
  ******************************************************************************/
 'use-strict';
 /* eslint no-console: 0 */
