@@ -34,6 +34,8 @@
 //   {s: 4, t: 5, len: 9}
 // ];
 
+'use-strict';
+/* eslint no-console: 0 */
 const vertexes = require('./vertsEdges');
 const vertObjs = vertexes.vertexes;
 const V = [];
@@ -57,15 +59,15 @@ function make_graph() {
 
   // Add all verts to graph
   for (let v of V) {
-  graph[v] = {
-    edges: []
-  };
+    graph[v] = {
+      edges: []
+    };
   }
 
   // Add all edges
   for (let e of E) {
-  graph[e.s].edges.push({ target:e.t, length: e.len});
-  graph[e.t].edges.push({ target:e.s, length: e.len});
+    graph[e.s].edges.push({ target:e.t, length: e.len});
+    graph[e.t].edges.push({ target:e.s, length: e.len});
   }
 
   return graph;
@@ -184,7 +186,7 @@ function Dijkstra(graph, source, destination) {
     return {
       path: path,
       distance: dist[destination]
-    }
+    };
   }
 
   // Not found, or not reachable
@@ -196,9 +198,10 @@ let graph = make_graph();
 
 // Compute a shortest path
 const source = 0;
-const destination = 3;
+// const destination = 3;
+const destination = 1;
 
 const path = Dijkstra(graph, source, destination);
 
 console.log(`Shortest path from ${source} to ${destination}: ${JSON.stringify(path.path)}`);
-console.log(`Distance: ${path.distance}`)
+console.log(`Distance: ${path.distance}`);
