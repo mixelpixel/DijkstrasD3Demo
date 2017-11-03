@@ -1,0 +1,46 @@
+body {
+  padding: 10px;
+}
+
+.App {
+}
+
+
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+.link-path {
+  fill: none;
+  stroke: #44f;
+  stroke-width: 5.5px;
+}
+
+.link.licensing {
+  stroke: green;
+}
+
+.link.resolved {
+  stroke-dasharray: 0,2 1;
+}
+
+circle {
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+.link-text {
+  text-anchor: middle;
+  alignment-baseline: middle;
+  color: blue;
+  font: 8px sans-serif;
+  pointer-events: none;
+}
