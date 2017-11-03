@@ -32,3 +32,7 @@ console.log(distanceBetween.distanceBetween(city_list.Cities[12268], city_list.C
 Cities = [
   {"x":"33613.1588","y":"86118.3061","name":"Lincoln | Talladega | AL"}, ...
   */
+
+
+   36014.8920  115267.9560 | Exploration Peak Park | Clark | NV
+   42823.9560   76053.5345 | Apulia | Onondaga | NY
