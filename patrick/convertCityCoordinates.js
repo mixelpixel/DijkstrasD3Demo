@@ -6,7 +6,6 @@
 'use-strict';
 /* eslint no-console: 0 */
 
-// const process = require('process'); // <~~~ Not needed, just making linter happy
 const fs = require('fs');
 const os = require('os');
 const rawtext = fs.readFileSync('./usa115475_cities.txt', 'utf8').split(os.EOL);
