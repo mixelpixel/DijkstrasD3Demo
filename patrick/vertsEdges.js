@@ -21,26 +21,29 @@ const NY = cityList[71590];
 let vertexes = [LA, NY];
 // Add another group of cities from the big list
 // const numOfVertexes = process.argv[2] || 10;
-const numOfVertexes = 1000;
+const numOfVertexes = 10;
 for (let i = 0; i < numOfVertexes; i++) {
   vertexes.push(cityList[Math.floor(Math.random() * cityList.length)]);
 }
 // console.log(vertexes);
 // console.log(vertexes.length);
 
+// WEIGHT
+let weight = Math.random();
+
 // list of connected cities - limiting LA and NY to one connection, all others connected
 // s = starting node (from)
 // t = target node (to)
 // len = length as the "weight" of the "edge"
-let edgeList = [
+let buildEdgeList = [
   { s: 0,
     t: 2,
-    len: dist(vertexes[0], vertexes[2]),
+    len: weight * dist(vertexes[0], vertexes[2]),
     // route: `from ${vertexes[0].name} to ${vertexes[2].name}`,
   },
   { s: 1,
     t: vertexes.length - 1,
-    len: dist(vertexes[1], vertexes[vertexes.length - 1]),
+    len: weight * dist(vertexes[1], vertexes[vertexes.length - 1]),
     // route: `from ${vertexes[1].name} to ${vertexes[vertexes.length - 1].name}`,
   },
 ];
@@ -49,11 +52,17 @@ for (let i = 2; i < numOfVertexes + 2; i++) {
   for (let j = 2; j < numOfVertexes + 2; j++) {
     if (j !== i) {
       if (i !== numOfVertexes + 3 - j) {
-        edgeList.push({s: i, t: j, len: dist(vertexes[i], vertexes[j])});
-      // edgeList.push({s: i, t: j, len: dist(vertexes[i], vertexes[j]), route: `from ${vertexes[i].name} to ${vertexes[j].name}`});
+        buildEdgeList.push({s: i, t: j, len: weight * dist(vertexes[i], vertexes[j])});
+      // buildEdgeList.push({s: i, t: j, len: dist(vertexes[i], vertexes[j]), route: `from ${vertexes[i].name} to ${vertexes[j].name}`});
       }
     }
   }
+}
+let edgeList = [];
+edgeList.push(buildEdgeList[0]);
+edgeList.push(buildEdgeList[1]);
+for (let i = 2; i < buildEdgeList.length; i++) {
+  edgeList.push(buildEdgeList[i]);
 }
 console.log(edgeList);
 

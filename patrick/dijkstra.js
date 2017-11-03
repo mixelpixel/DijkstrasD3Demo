@@ -64,10 +64,12 @@ function make_graph() {
     };
   }
 
+  let weight = Math.random();
+
   // Add all edges
   for (let e of E) {
-    graph[e.s].edges.push({ target:e.t, length: e.len});
-    graph[e.t].edges.push({ target:e.s, length: e.len});
+    graph[e.s].edges.push({ target:e.t, length: e.len * weight});
+    graph[e.t].edges.push({ target:e.s, length: e.len * weight});
   }
   // console.log(JSON.stringify(graph));
   return graph;
