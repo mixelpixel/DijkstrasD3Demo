@@ -45,9 +45,9 @@ for (let i = 0; i < vertObjs.length; i++) {
   V.push(i);
 }
 
-console.log(V); // ~~~> [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-console.log(vertObjs);
-console.log(E);
+// console.log(V); // ~~~> [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+// console.log(vertObjs);
+// console.log(E);
 
 
 
@@ -69,7 +69,7 @@ function make_graph() {
     graph[e.s].edges.push({ target:e.t, length: e.len});
     graph[e.t].edges.push({ target:e.s, length: e.len});
   }
-
+  // console.log(JSON.stringify(graph));
   return graph;
 }
 

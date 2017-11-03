@@ -6,7 +6,7 @@
 'use-strict';
 /* eslint no-console: 0 */
 
-const process = require('process'); // <~~~ Not needed, just making linter happy
+// const process = require('process'); // <~~~ Not needed, just making linter happy
 // const cities = require('./cities.js');
 const cities = require('./convertCityCoordinates.js');
 const cityList = cities.cities;
@@ -21,7 +21,7 @@ const NY = cityList[71590];
 let vertexes = [LA, NY];
 // Add another group of cities from the big list
 // const numOfVertexes = process.argv[2] || 10;
-const numOfVertexes = 5;
+const numOfVertexes = 1000;
 for (let i = 0; i < numOfVertexes; i++) {
   vertexes.push(cityList[Math.floor(Math.random() * cityList.length)]);
 }
@@ -35,12 +35,12 @@ for (let i = 0; i < numOfVertexes; i++) {
 let edgeList = [
   { s: 0,
     t: 2,
-    l: dist(vertexes[0], vertexes[2]),
+    len: dist(vertexes[0], vertexes[2]),
     route: `from ${vertexes[0].name} to ${vertexes[2].name}`,
   },
   { s: 1,
     t: vertexes.length - 1,
-    l: dist(vertexes[1], vertexes[vertexes.length - 1]),
+    len: dist(vertexes[1], vertexes[vertexes.length - 1]),
     route: `from ${vertexes[1].name} to ${vertexes[vertexes.length - 1].name}`,
   },
 ];
@@ -48,7 +48,7 @@ let edgeList = [
 for (let i = 2; i < numOfVertexes + 2; i++) {
   for (let j = 2; j < numOfVertexes + 2; j++) {
     if (j !== i) {
-      edgeList.push({s: i, t: j, l: dist(vertexes[i], vertexes[j]), route: `from ${vertexes[i].name} to ${vertexes[j].name}`});
+      edgeList.push({s: i, t: j, len: dist(vertexes[i], vertexes[j]), route: `from ${vertexes[i].name} to ${vertexes[j].name}`});
     }
   }
 }
