@@ -36,23 +36,26 @@ let edgeList = [
   { s: 0,
     t: 2,
     len: dist(vertexes[0], vertexes[2]),
-    route: `from ${vertexes[0].name} to ${vertexes[2].name}`,
+    // route: `from ${vertexes[0].name} to ${vertexes[2].name}`,
   },
   { s: 1,
     t: vertexes.length - 1,
     len: dist(vertexes[1], vertexes[vertexes.length - 1]),
-    route: `from ${vertexes[1].name} to ${vertexes[vertexes.length - 1].name}`,
+    // route: `from ${vertexes[1].name} to ${vertexes[vertexes.length - 1].name}`,
   },
 ];
 // add edges between each and every city except LA and NY
 for (let i = 2; i < numOfVertexes + 2; i++) {
   for (let j = 2; j < numOfVertexes + 2; j++) {
     if (j !== i) {
-      edgeList.push({s: i, t: j, len: dist(vertexes[i], vertexes[j]), route: `from ${vertexes[i].name} to ${vertexes[j].name}`});
+      if (i !== numOfVertexes + 3 - j) {
+        edgeList.push({s: i, t: j, len: dist(vertexes[i], vertexes[j])});
+      // edgeList.push({s: i, t: j, len: dist(vertexes[i], vertexes[j]), route: `from ${vertexes[i].name} to ${vertexes[j].name}`});
+      }
     }
   }
 }
-// console.log(edgeList);
+console.log(edgeList);
 
 module.exports = {
   vertexes,
