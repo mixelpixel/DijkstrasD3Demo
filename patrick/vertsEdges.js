@@ -20,7 +20,8 @@ const LA = cityList[12268];
 const NY = cityList[71590];
 let vertexes = [LA, NY];
 // Add another group of cities from the big list
-const numOfVertexes = process.argv[2] || 10;
+// const numOfVertexes = process.argv[2] || 10;
+const numOfVertexes = 5;
 for (let i = 0; i < numOfVertexes; i++) {
   vertexes.push(cityList[Math.floor(Math.random() * cityList.length)]);
 }
