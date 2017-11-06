@@ -63,6 +63,51 @@ class Graph extends Component {
   }
 
   /**
+   * Find the path and highlight
+   */
+  findPath() {
+    let from = document.querySelector('#nodeFrom').value.trim();
+    let to = document.querySelector('#nodeTo').value.trim();
+
+    if (from === '' || to === '') {
+      alert('Must specify from and to nodes!');
+      return;
+    }
+
+    let [path, dist] = run(from, to);
+
+    /*
+    console.log(path);
+    console.log(dist);
+    */
+
+    /**
+     * Return true if a link key is on the path
+     */
+    function inPath(linkKey) {
+      for (let i = 1; i < path.length; i++) {
+        if (linkKey === path[i-1] + ',' + path[i] || linkKey === path[i] + ',' + path[i-1]) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Set the ones that are on the path
+    let allLineElems = document.querySelectorAll('line');
+    for (let elem of allLineElems) {
+      let linkKey = elem.getAttribute('linkkey');
+
+      if (inPath(linkKey)) {
+        elem.classList.add('link-path');
+      } else {
+        elem.classList.remove('link-path');
+      }
+    }
+
+  }
+
+  /**
    * Show me the money
    */
   render() {
@@ -79,23 +124,37 @@ class Graph extends Component {
 
     // Build a list of links (the lines/roads)
     let links = this.props.links.map(link => {
+      let dx = (link.target.px - link.source.px)/2 + link.source.px;
+      let dy = (link.target.py - link.source.py)/2 + link.source.py;
+      let transform = "translate(" + dx + "," + dy + ")";
+
       return (
-        <line className='link' key={link.key}
-          x1={link.source.x}
-          x2={link.target.x}
-          y1={link.source.y}
-          y2={link.target.y} />
+        <g>
+          <line className='link' key={link.key} linkkey={link.key}
+            x1={link.source.x}
+            x2={link.target.x}
+            y1={link.source.y}
+            y2={link.target.y} />
+          <text className='link-text' transform={transform}>{link.label}</text>
+        </g>
       );
     });
-
+    
     // return the whole SVG thingy
     return (
-      <svg width={width} height={height}>
-        <g>
-          {links}
-          {nodes}
-        </g>
-      </svg>
+      <div>
+        <div>
+          <input type="text" placeholder="From node" id="nodeFrom"/>
+          <input type="text" placeholder="To node" id="nodeTo"/>
+          <button onClick={this.findPath}>Find Path</button>
+        </div>
+        <svg width={width} height={height}>
+          <g>
+            {links}
+            {nodes}
+          </g>
+        </svg>
+      </div>
     );
   }
 
@@ -139,7 +198,6 @@ class D3Dijkstra extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.findPath}>Find Path</button>
         <Graph nodes={this.state.nodes} links={this.state.links} />
       </div>
     );

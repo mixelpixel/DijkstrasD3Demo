@@ -44,8 +44,10 @@ for(let i = 0 ; i < size ; i++) {
 return {V:V, E:E};
 }
 
+/*
 const a = 0; // From
 const b = 3; // To
+*/
 
 //let graph_spec = gen_graph(1000, 5);
 //let tree = build_tree(graph_spec.V, graph_spec.E);
@@ -95,7 +97,7 @@ const Dijkstra = {
 /**
  * Do the search
  */
-function run() {
+function run(a, b) {
 	let results = Dijkstra.dijkstra(tree, a, b);
 	let path = [];
 	let u = b;
@@ -104,8 +106,10 @@ function run() {
 		u = results.prev[u];
 	}
 
+	/*
 	console.log("Path: " + path);
 	console.log("Distance: " + results.dist[b]);
+	*/
 
 	return [path, results.dist[b]];
 }
@@ -129,7 +133,8 @@ function getNodes() {
 			source: e.s,
 			target: e.t,
 			key: `${e.s},${e.t}`,
-			label: e.l
+			label: e.l,
+			length: e.l
 		});
 	}
 
