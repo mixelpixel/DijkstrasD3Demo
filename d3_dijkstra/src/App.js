@@ -124,15 +124,22 @@ class Graph extends Component {
 
     // Build a list of links (the lines/roads)
     let links = this.props.links.map(link => {
+      let dx = (link.target.px - link.source.px)/2 + link.source.px;
+      let dy = (link.target.py - link.source.py)/2 + link.source.py;
+      let transform = "translate(" + dx + "," + dy + ")";
+
       return (
-        <line className='link' key={link.key} linkkey={link.key}
-          x1={link.source.x}
-          x2={link.target.x}
-          y1={link.source.y}
-          y2={link.target.y} />
+        <g>
+          <line className='link' key={link.key} linkkey={link.key}
+            x1={link.source.x}
+            x2={link.target.x}
+            y1={link.source.y}
+            y2={link.target.y} />
+          <text className='link-text' transform={transform}>{link.label}</text>
+        </g>
       );
     });
-
+    
     // return the whole SVG thingy
     return (
       <div>

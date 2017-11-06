@@ -133,7 +133,8 @@ function getNodes() {
 			source: e.s,
 			target: e.t,
 			key: `${e.s},${e.t}`,
-			label: e.l
+			label: e.l,
+			length: e.l
 		});
 	}
 
